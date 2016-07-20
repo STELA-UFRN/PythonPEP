@@ -15,6 +15,15 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	
+	<servlet>
+		<servlet-name>Auth Servlet</servlet-name>
+		<servlet-class>br.ufrn.imd.fiware.security.servlet.AuthServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>Auth Servlet</servlet-name>
+		<url-pattern>/auth</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>/faces/*</url-pattern>
@@ -30,6 +39,6 @@
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping>	
 	
 </web-app>
