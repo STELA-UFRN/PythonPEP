@@ -12,16 +12,17 @@
 	<h:body>
 		<h2>Security Application Example</h2>
 		
-		<h3>Test Code Request</h3>
+		<h3>Authentication Test</h3>
+		<h4>Authenticate User</h4>
 		<h:form>
-			<h:commandButton value="Get Code" action="#{securityAppMBean.testCodeRequest}"></h:commandButton>
+			<h:commandButton value="Authenticate" action="#{securityAppMBean.authenticateUser}"></h:commandButton>
 		</h:form>
 		
-		<h3>Test Token Request</h3>
+		<h4>Request Logged User Info</h4>
 		<h:form>
-			<h:commandButton value="Auth" action="#{securityAppMBean.testTokenRequest}"></h:commandButton>
+			<h:commandButton value="Request Info" action="#{securityAppMBean.requestUserInfo}"></h:commandButton>
 		</h:form>
-		<h:outputLabel value="#{securityAppMBean.resultToken}"></h:outputLabel>
+		<h:outputLabel value="#{securityAppMBean.resultUserInfo}"></h:outputLabel>
 		
 		<h3>Hello Service</h3>
 		<h4>Hello World</h4>

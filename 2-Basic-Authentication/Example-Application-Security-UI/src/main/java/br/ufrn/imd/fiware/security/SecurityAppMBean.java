@@ -31,7 +31,7 @@ public class SecurityAppMBean implements Serializable {
 	private String username;
 	private String name;
 
-	private String resultToken;
+	private String resultUserInfo;
 	private String resultHelloWorld, resultGreeting;
 	private String resultListNames, resultAddName;
 
@@ -40,7 +40,7 @@ public class SecurityAppMBean implements Serializable {
 		this.name = "";
 	}
 	
-	public void testCodeRequest() throws OAuthSystemException, IOException {
+	public void authenticateUser() throws OAuthSystemException, IOException {
 		HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 		
 		OAuthClientRequest codeRequest = OAuthClientRequest
@@ -51,6 +51,10 @@ public class SecurityAppMBean implements Serializable {
 				.buildQueryMessage();
 		
 		httpServletResponse.sendRedirect(codeRequest.getLocationUri());
+	}
+	
+	public void requestUserInfo() {
+		//TODO Implement
 	}
 
 	public void helloWorld() {		
@@ -102,13 +106,13 @@ public class SecurityAppMBean implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public String getResultToken() {
-		return resultToken;
+
+	public String getResultUserInfo() {
+		return resultUserInfo;
 	}
 
-	public void setResultToken(String resultToken) {
-		this.resultToken = resultToken;
+	public void setResultUserInfo(String resultUserInfo) {
+		this.resultUserInfo = resultUserInfo;
 	}
 
 	public String getResultHelloWorld() {
