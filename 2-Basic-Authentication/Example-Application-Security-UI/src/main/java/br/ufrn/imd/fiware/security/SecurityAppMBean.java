@@ -10,7 +10,9 @@ import java.net.URL;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
@@ -54,7 +56,13 @@ public class SecurityAppMBean implements Serializable {
 	}
 	
 	public void requestUserInfo() {
-		//TODO Implement
+		HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		HttpSession session = httpServletRequest.getSession();
+		String accessToken = (String) session.getAttribute("access_token");
+		
+		String strJson = callWebservice("http://10.7.31.29:8000/user?access_token=" + accessToken);
+		JSONObject jsonObject = new JSONObject(strJson);
+		resultUserInfo = jsonObject.toString();
 	}
 
 	public void helloWorld() {		
