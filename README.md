@@ -56,10 +56,11 @@ To view the logs:
 
 Open your browser and navigate to the IP address associated with Docker Machine (docker-machine-ip/port).
 
+***error: ```docker-machine regenerate-certs -f security-ui```***
 
 ### References:
 
--[Dockerizing flask with compose and machine from localhost to the cloud](https://realpython.com/blog/python/dockerizing-flask-with-compose-and-machine-from-localhost-to-the-cloud/)
+- [Dockerizing flask with compose and machine from localhost to the cloud](https://realpython.com/blog/python/dockerizing-flask-with-compose-and-machine-from-localhost-to-the-cloud/)
 
 	
--[Fiware-idm](https://github.com/ging/fiware-idm/tree/master/extras/docker)
+- [Fiware-idm](https://github.com/ging/fiware-idm/tree/master/extras/docker)
