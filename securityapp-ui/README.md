@@ -9,22 +9,21 @@ Featuring:
 
 Commands: 
 
-```docker-machine start security-ui```
+	```docker-machine start security-ui```
 
-```docker-compose build```
+	```eval $(docker-machine env default)```
 
-```docker-compose up -d```
+	```docker-compose build```
 
-docker-machine start default
-docker-machine env default
-eval $(docker-machine env default)
-docker-compose up
+	```docker-compose up -d```
 
 
+error: ```docker-machine regenerate-certs -f security-ui```
 
-error: docker-machine regenerate-certs -f security-ui
-eval "$(docker-machine env security-rest)"
 
-https://realpython.com/blog/python/dockerizing-flask-with-compose-and-machine-from-localhost-to-the-cloud/
+References:
 
-https://github.com/ging/fiware-idm/tree/master/extras/docker
+	https://realpython.com/blog/python/dockerizing-flask-with-compose-and-machine-from-localhost-to-the-cloud/
+
+	
+	https://github.com/ging/fiware-idm/tree/master/extras/docker
