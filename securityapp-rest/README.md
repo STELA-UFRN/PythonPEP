@@ -2,6 +2,6 @@
 
 Featuring:
 
-- Docker v1.9.0
-- Docker Compose v1.5.0
-- Docker Machine v0.5.0
+- Docker v1.12.0
+- Docker Compose v1.8.0
+- Docker Machine v0.8.0
