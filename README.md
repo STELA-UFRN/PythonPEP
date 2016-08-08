@@ -55,3 +55,11 @@ To view the logs:
 ```$ docker-compose logs```	
 
 Open your browser and navigate to the IP address associated with Docker Machine (docker-machine-ip/port).
+
+
+### References:
+
+-[Dockerizing flask with compose and machine from localhost to the cloud](https://realpython.com/blog/python/dockerizing-flask-with-compose-and-machine-from-localhost-to-the-cloud/)
+
+	
+-[Fiware-idm](https://github.com/ging/fiware-idm/tree/master/extras/docker)
