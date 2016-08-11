@@ -9,12 +9,12 @@ from flask import request
 class AuthFiware(object):
 	"""docstring for ClassName"""
 	def __init__(self):
-		self.client_id = "1817761f0f4d4aa495c8544551f980a2"
-		self.client_secret = "d3546b010ba441b8921c88b4669707f8"
-		self.client_code = ""
+		self.client_id = "7ef3ee8f4f0c4075a277bed2758e7f45"
+		self.client_secret = "79838f02cfe9465285423bca2ad5d35d"
 
 		self.authorize_url = "http://0.0.0.0:8000/oauth2/authorize" 
 		self.token_url = "http://0.0.0.0:8000/oauth2/token" 
+
 		self.redirect_uri = "http://192.168.99.101:8000/auth"
 	
 	def authorize(self):
