@@ -22,16 +22,19 @@ class AuthFiware(object):
 		"response_type": "code",
 		"client_id": self.client_id,
 		"redirect_uri": self.redirect_uri
-		}
-		resp = requests.get(self.authorize_url, p)
-		self.client_code = request.args.get('code')
-		return resp
+		} 
+		resp = requests.get(self.authorize_url, p) 
+		return resp.url
 
-	def access_token(self):
+	def access_token(self, code):
 		p = {
 		"grant_type": "authorization_code",
 		"code": self.client_code,
 		"redirect_uri": self.redirect_uri
 		}
 		resp = requests.post(self.token_url, p)
-		return resp
+		return resp 
+
+	def set_code(self, code):
+		self.client_code = code
+    
