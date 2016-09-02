@@ -1,13 +1,17 @@
 from flask import Flask, render_template, request, redirect, Response
-from config import BaseConfig
-from auth_fiware import AuthFiware
+from config import BaseConfig 
 from oauth_fiware import OAuth2
 import requests
+
+try:
+    import simplejson as json
+except ImportError:
+    import json
 
 app = Flask(__name__)
 app.config.from_object(BaseConfig)
 
-token = ""
+code = ""
 url_service = 'http://192.168.99.100:8000/'
 auth_app = OAuth2()
 
@@ -20,6 +24,11 @@ def index():
 def authenticate():
 	auth_url = auth_app.authorize_url() 
 	return redirect(auth_url)
+
+@app.route("/access_token")
+def access_token():
+	content = auth_app.get_token(code)
+	return render_template('index.html', content=content)
 
 @app.route("/username", methods=['GET'])
 def username(): 
@@ -42,13 +51,9 @@ def auth():
 	if error:
 		return "Error: " + error 
 
-	if request.method == 'GET':
-		code = request.args.get('code') 
-		token_request = auth_app.get_token(code)   
-		return render_template('index.html', content=token_request) 
-	else:
-		token = request.form['access_token']
-		return render_template('index.html', content=token)
+	code = request.args.get('code')  
+	content = auth_app.fiware_login() 
+	return render_template('index.html', content="content: " + content) 
 
 if __name__ == '__main__':
     app.run()
