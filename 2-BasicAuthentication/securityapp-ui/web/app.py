@@ -50,10 +50,12 @@ def auth():
 	error = request.args.get('error', '')
 	if error:
 		return "Error: " + error 
-
-	code = request.args.get('code')  
-	content = auth_app.fiware_login() 
-	return render_template('index.html', content="content: " + content) 
+	if request.method == 'GET':
+		code = request.args.get('code')  
+		content = auth_app.get_token(code) 
+		return render_template('index.html', content="content: " + content.text) 
+	if response.method == 'POST':
+		return render_template('index.html', content="content: post")
 
 if __name__ == '__main__':
     app.run()
