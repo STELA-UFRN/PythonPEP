@@ -3,8 +3,8 @@ import os
 
 
 class BaseConfig(object):
-	SECRET_KEY = 'hi'
-	DEBUG = True
+    SECRET_KEY = 'hi'
+    DEBUG = True
 
 
 # class BaseConfig(object):
