@@ -57,6 +57,10 @@ def user_info():
 
     user_info = auth_app.get_user_info(session['access_token'])
     content_user = 'username: {} </br> email: {}'.format(user_info['displayName'], user_info['email'])
+    roles = user_info['roles']
+    session['roles'] = []
+    for role in roles:
+        session['roles'].append(str(role['name']))
     return render_template('index.html', content=Markup(content_user))
 
 
