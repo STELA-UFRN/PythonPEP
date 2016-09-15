@@ -1,6 +1,6 @@
 import requests
 from config import BaseConfig
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, Markup
 from oauth_fiware import OAuth2
 
 try:
@@ -11,8 +11,7 @@ except ImportError:
 app = Flask(__name__)
 app.config.from_object(BaseConfig)
 
-auth_code = ''
-url_service = 'http://192.168.99.102:8000/'  # REST APP ADDRESS
+url_service = 'http://192.168.99.101:8000/'  # REST APP ADDRESS
 auth_app = OAuth2()
 
 
@@ -28,12 +27,6 @@ def authenticate():
     return redirect(auth_url)
 
 
-@app.route("/access_token")
-def access_token():
-    content = auth_app.get_token(auth_code)
-    return render_template('index.html', content=content)
-
-
 @app.route('/auth', methods=['GET', 'POST'])
 def auth():
     error = request.args.get('error', '')
@@ -43,10 +36,12 @@ def auth():
     if request.method == 'GET':
         auth_code = request.args.get('code')
         token_dict = auth_app.get_token(auth_code)
-        return render_template('index.html', content="access_token: " + token_dict['access_token'] + ", " +
-                                                     "token_type: " + token_dict['token_type'] + ", " +
-                                                     "expires_in: " + str(token_dict['expires_in']) + ", " +
-                                                     "refresh_token: " + token_dict['refresh_token'])
+        content_token = "access_token: {} </br> token_type: {} </br> expires_in: {} </br> refresh_token: {}".format(
+            token_dict['access_token'], token_dict['token_type'], str(token_dict['expires_in']), token_dict['refresh_token']
+        )
+        user_info = auth_app.get_user_info(token_dict['access_token'])
+        content_user = 'username: {} </br> email: {}'.format(user_info['displayName'], user_info['email'])
+        return render_template('index.html', content=Markup(content_token + "</br></br>" + content_user))
 
 
 @app.route("/username", methods=['GET'])
