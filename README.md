@@ -1,66 +1,48 @@
-# Security-app
+# Example Application Security 
 
-Example Application Security in Python/Flask.
-
-
-## Dockerizing the app
-
-
-Test:
-	
-```$ docker-machine --version```
-
-```$ docker-compose --version```
+Aplicação Básica para mostrar a utilização do FIWARE Identity Manager Generic Enabler, responsável pelo gerenciamento de identidade de usuarios, organizações e aplicações, das suas credenciais e da autenticação dessas entidades. A implementação de referência desta GE é o Keyrock.
+ 
+ 
+Files
+-----
+A aplicação pode ser encontrada em duas versões: uma em Python e em Java (ambas em diretórios distintos). Existem um README especifico para cada projeto explicando possíveis especificações ou exigências.
 
 
-To start Docker Machine:
+Docker and Fiware/IdM
+---------------------
+Caso deseje utilizar a imagem do Fiware/IdM em uma máquina docker, basta utilizar os arquivos presentes no diretório ```fiware/pep-proxy```.
 
-```$ docker-machine create -d virtualbox dev;```
+### Instruções básicas
 
+Com a máquina docker ativa, entre no diretório ```fiware/pep-proxy``` e execute:
 
-Point the Docker client at the dev machine:
-	
-```$ eval "$(docker-machine env dev)"```
+    $ docker-compose up
 
-Check the machines:
+Agora acesse ```http://<ip da máquina>:8000/``` (ex.: ```http://192.168.99.102:8000/```).
 
-```docker-machine ls```
+*docker-compose.yml* : No arquivo docker-compose.yml temos:
 
-### Docker Compose
-
-Take a look at the docker-compose.yml file:
-	
 ```
-web:
-  restart: always
-  build: ./web
-  ports:
-    - "8000:8000" 
-  volumes:
-    - /usr/src/app/static
-  env_file: .env
-  	command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+idm:
+    restart: always
+    image: fiware/idm
+    ports:
+        - 8000:8000
+        - 5000:5000
+
+pep-proxy:
+    restart: always
+    image: fiware/pep-proxy
+    ports:
+        - 80:80
+    volumes:
+        - ~/Projetos/fiware/pep-proxy/config.js:/opt/fiware-pep-proxy/config.js
 ```
 
-Now, to get the containers running, build the images and then start the services:
-	
-```	
-$ docker-compose build
 
-$ docker-compose up -d
-```
+Altere a linha ```- ~/Projetos/fiware/pep-proxy/config.js:/opt/fiware-pep-proxy/config.js``` para indicar o caminho até o arquivo ```config.js``` em sua máquina.
 
-To view the logs:
-	
-```$ docker-compose logs```	
 
-Open your browser and navigate to the IP address associated with Docker Machine (docker-machine-ip/port).
+*config.js.template* : este é o arquivo template para definir as configurações para a utilização do Pep. Um exemplo de configuração pode ser encontrada no arquivo ```config.js``` no mesmo diretório. 
 
-***error: ```docker-machine regenerate-certs -f security-ui```***
 
-### References:
-
-- [Dockerizing flask with compose and machine from localhost to the cloud](https://realpython.com/blog/python/dockerizing-flask-with-compose-and-machine-from-localhost-to-the-cloud/)
-
-	
-- [Fiware-idm](https://github.com/ging/fiware-idm/tree/master/extras/docker)
