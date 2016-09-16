@@ -11,9 +11,12 @@
         <p class="lead">Basic Interface SecurityApp</p>
     </div>
 
-	<div> 
-		{{content}}
-	</div> 
+	<div>
+        {% if content %}
+		    {{content}}
+            <hr>
+        {% endif %}
+	</div>
 
 	<br>
 

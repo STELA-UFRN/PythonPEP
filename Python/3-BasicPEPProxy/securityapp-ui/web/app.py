@@ -61,7 +61,7 @@ def user_info():
     session['roles'] = []
     for role in roles:
         session['roles'].append(str(role['name']))
-    return render_template('index.html', content=Markup(content_user))
+    return render_template('index.html', content=Markup(content_user + '</br> roles: ' + str(session['roles'])))
 
 
 @app.route("/username", methods=['GET'])
@@ -75,7 +75,8 @@ def username():
 
 @app.route("/list", methods=['GET'])
 def list():
-    response = requests.get(url_service + "service2/list")
+    headers = {"X-Auth-Token": session['access_token']}
+    response = requests.get(url_service + "service2/list", headers=headers)
     return render_template('index.html', content=response.text)
 
 
@@ -84,7 +85,8 @@ def add():
     if request.args.get('name') == '':
         error = 'Fill the name field first!'
         return render_template('index.html', error=error)
-    response = requests.get(url_service + "service2/add/" + request.args.get('name'))
+    headers = {"X-Auth-Token": session['access_token']}
+    response = requests.get(url_service + "service2/add/" + request.args.get('name'), headers=headers)
     return render_template('index.html', content=response.text)
 
 

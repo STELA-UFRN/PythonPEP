@@ -3,27 +3,26 @@ var config = {};
 config.pep_port = 80;
 
 // Set this var to undefined if you don't want the server to listen on HTTPS
-// config.https = {
-//     enabled: false,
-//     cert_file: 'cert/cert.crt',
-//     key_file: 'cert/key.key',
-//     port: 443
-// };
-config.https = undefined;
+config.https = {
+    enabled: false,
+    cert_file: 'cert/cert.crt',
+    key_file: 'cert/key.key',
+    port: 443
+};
 
-config.account_host = 'http://192.168.99.100:8000';
+config.account_host = 'http://192.168.99.102:8000/';
 
-config.keystone_host = '192.168.99.100';
+config.keystone_host = '192.168.99.102';
 config.keystone_port = 5000;
 
-config.app_host = '192.168.99.102';
-config.app_port = '8080';
+config.app_host = '192.168.99.100';
+config.app_port = '8000';
 // Use true if the app server listens in https
 config.app_ssl = false;
 
 // Credentials obtained when registering PEP Proxy in Account Portal
-config.username = 'pep_proxy_827d03dfe9d940ed93d719a27afb73b6';
-config.password = 'c6a596489a0746a1911da82929fa7876';
+config.username = 'pep_proxy_9269fcc4199a432cbeee1df5958fda77';
+config.password = 'b26f01a84d2f403cbbecbba5c236a3ef';
 
 // in seconds
 config.chache_time = 300;
@@ -41,8 +40,8 @@ config.azf = {
 };
 
 // list of paths that will not check authentication/authorization
-// example: ['/public/*', '/static/css/']
-config.public_paths = [ '', '' ];
+// example: ['/public/*', '/static/css/'] /Example-Application-Security-REST/Python/3-BasicPEPProxy/securityapp-rest/*
+config.public_paths = [''];
 
 // options: oauth2/keystone
 config.tokens_engine = 'oauth2';
