@@ -11,4 +11,4 @@ pep-proxy:
     ports:
         - 80:80
     volumes:
-        - ./config/config.js:/opt/fiware-pep-proxy/config.js
+        - ~/Documents/ufrn/projeto/Example-Application-Security/fiware/pep-proxy/config/config.js:/opt/fiware-pep-proxy/config.js

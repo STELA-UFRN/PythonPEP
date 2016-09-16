@@ -11,7 +11,6 @@ except ImportError:
 app = Flask(__name__)
 app.config.from_object(BaseConfig)
 
-url_service = 'http://192.168.99.101:8000/'  # REST APP ADDRESS
 auth_app = OAuth2()
 
 
@@ -69,14 +68,15 @@ def username():
     if request.args.get('username') == '':
         error = 'Fill the name field first!'
         return render_template('index.html', error=error)
-    response = requests.get(url_service + "service1/" + request.args.get('username'))
+    headers = {"X-Auth-Token": session['access_token']}
+    response = requests.get(auth_app.proxy_address + "service1/" + request.args.get('username'), headers=headers)
     return render_template('index.html', content=response.text)
 
 
 @app.route("/list", methods=['GET'])
 def list():
     headers = {"X-Auth-Token": session['access_token']}
-    response = requests.get(url_service + "service2/list", headers=headers)
+    response = requests.get(auth_app.proxy_address + "service2/list", headers=headers)
     return render_template('index.html', content=response.text)
 
 
@@ -85,8 +85,8 @@ def add():
     if request.args.get('name') == '':
         error = 'Fill the name field first!'
         return render_template('index.html', error=error)
-    headers = {"X-Auth-Token": session['access_token']}
-    response = requests.get(url_service + "service2/add/" + request.args.get('name'), headers=headers)
+    headers = {'X-Auth-Token': session['access_token']}
+    response = requests.get(auth_app.proxy_address + "service2/add/" + request.args.get('name'), headers=headers)
     return render_template('index.html', content=response.text)
 
 

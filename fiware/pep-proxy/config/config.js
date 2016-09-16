@@ -3,19 +3,21 @@ var config = {};
 config.pep_port = 80;
 
 // Set this var to undefined if you don't want the server to listen on HTTPS
-config.https = {
-    enabled: false,
-    cert_file: 'cert/cert.crt',
-    key_file: 'cert/key.key',
-    port: 443
-};
+// config.https = {
+//     enabled: false,
+//     cert_file: 'cert/cert.crt',
+//     key_file: 'cert/key.key',
+//     port: 443
+// };
 
-config.account_host = 'http://192.168.99.102:8000/';
+config.https = undefined;
 
-config.keystone_host = '192.168.99.102';
+config.account_host = 'http://192.168.99.100:8000/'; // IDM
+
+config.keystone_host = '192.168.99.100'; // IDM
 config.keystone_port = 5000;
 
-config.app_host = '192.168.99.100';
+config.app_host = '192.168.99.102'; // REST
 config.app_port = '8000';
 // Use true if the app server listens in https
 config.app_ssl = false;

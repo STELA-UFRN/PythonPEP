@@ -21,11 +21,12 @@ class OAuth2(object):
         raw_auth_code = '{}:{}'.format(self.client_id, self.client_secret)
         self.base_64_auth_code = base64.b64encode(raw_auth_code.encode('utf-8')).decode('utf-8')
 
-        self.redirect_uri = 'http://192.168.99.100:8000/auth'  # CALLBACK URL REGISTERED ON IDM (UI APP AUTH ADDRESS)
+        self.redirect_uri = 'http://192.168.99.101:8000/auth'  # CALLBACK URL REGISTERED ON IDM (UI APP AUTH ADDRESS)
 
-        self.idm_address = 'http://192.168.99.102:8000/'  # IDM ADDRESS
-        self.authorization_url = self.idm_address + 'oauth2/authorize' # AUTHORIZATION URL
-        self.token_url = self.idm_address + 'oauth2/token' # TOKEN URL
+        self.proxy_address = "http://192.168.99.100:80/"
+        self.idm_address = 'http://192.168.99.100:8000/'  # IDM ADDRESS
+        self.authorization_url = self.idm_address + 'oauth2/authorize'  # AUTHORIZATION URL
+        self.token_url = self.idm_address + 'oauth2/token'  # TOKEN URL
 
     def authorize_url(self, **kwargs):
         oauth_params = {'response_type': 'code', 'redirect_uri': self.redirect_uri, 'client_id': self.client_id}
