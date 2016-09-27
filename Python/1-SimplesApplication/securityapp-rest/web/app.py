@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, jsonify
 from config import BaseConfig 
 
 app = Flask(__name__)
@@ -8,8 +8,8 @@ app.config.from_object(BaseConfig)
 @app.route('/service1/<username>')
 def hello(username = None): 
 	if not username:
-		return jsonify(result='Hello World', status=200)
-	return jsonify(result='Hello World! {0}'.format(username), status=200)
+		return jsonify(result='Hello, World', status=200)
+	return jsonify(result='Hello, {0}'.format(username), status=200)
 
 @app.route('/service2/list') 
 def list(): 

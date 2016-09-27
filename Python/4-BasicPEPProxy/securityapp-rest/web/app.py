@@ -9,8 +9,8 @@ app.config.from_object(BaseConfig)
 @app.route('/service1/<username>')
 def hello(username=None):
     if not username:
-        return jsonify(result='Hello World', status=200)
-    return jsonify(result='Hello World! {}'.format(username), status=200)
+        return jsonify(result='Hello, World', status=200)
+    return jsonify(result='Hello, {0}'.format(username), status=200)
 
 
 @app.route('/service2/list')

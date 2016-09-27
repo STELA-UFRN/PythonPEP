@@ -10,6 +10,7 @@ config.pep_port = 80;
 //     port: 443
 // };
 
+
 config.https = undefined;
 
 config.account_host = 'http://192.168.99.100:8000/'; // IDM
@@ -17,14 +18,14 @@ config.account_host = 'http://192.168.99.100:8000/'; // IDM
 config.keystone_host = '192.168.99.100'; // IDM
 config.keystone_port = 5000;
 
-config.app_host = '192.168.99.102'; // REST
+config.app_host = '192.168.99.103'; // REST
 config.app_port = '8000';
 // Use true if the app server listens in https
 config.app_ssl = false;
 
 // Credentials obtained when registering PEP Proxy in Account Portal
-config.username = 'pep_proxy_9269fcc4199a432cbeee1df5958fda77';
-config.password = 'b26f01a84d2f403cbbecbba5c236a3ef';
+config.username = 'pep_proxy_36f88a110e8d45cca4f287ee96f234ef';
+config.password = '94c2ec45a3904bb7a6c6a0c3a40639e0';
 
 // in seconds
 config.chache_time = 300;
