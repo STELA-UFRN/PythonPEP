@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 @ManagedBean(name = "securityAppMBean")
 @SessionScoped
-public class SecurityAppMBean implements Serializable {
+public class SecurityAppMBean extends BaseBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,6 +32,7 @@ public class SecurityAppMBean implements Serializable {
 
 	private String username;
 	private String name;
+	private String accessToken;
 
 	private String resultUserInfo;
 	private String resultHelloWorld, resultGreeting;
@@ -58,7 +59,7 @@ public class SecurityAppMBean implements Serializable {
 	public void requestUserInfo() {
 		HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
 		HttpSession session = httpServletRequest.getSession();
-		String accessToken = (String) session.getAttribute("access_token");
+		accessToken = (String) session.getAttribute("access_token");
 		
 		String strJson = callWebservice("http://192.168.99.100:8000/user?access_token=" + accessToken);
 		JSONObject jsonObject = new JSONObject(strJson);
@@ -115,6 +116,14 @@ public class SecurityAppMBean implements Serializable {
 		this.name = name;
 	}
 
+	public String getAccessToken() {
+		return accessToken;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+	
 	public String getResultUserInfo() {
 		return resultUserInfo;
 	}
@@ -154,45 +163,16 @@ public class SecurityAppMBean implements Serializable {
 	public void setResultAddName(String resultAddName) {
 		this.resultAddName = resultAddName;
 	}
-
-	private static String getStringFromInputStream(InputStream is) {
-		BufferedReader br = null;
-		StringBuilder sb = new StringBuilder();
-
-		String line;
-		try {
-			br = new BufferedReader(new InputStreamReader(is));
-			while ((line = br.readLine()) != null) {
-				sb.append(line);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return sb.toString();
+	
+	public void goToUserGUI() throws IOException {
+		GoPage("user_gui.xhtml");
+	}
+	
+	public void goToHome() throws IOException {
+		GoPage("index.xhtml");
 	}
 
-	private String callWebservice(String urlWebservice) {
-		HttpURLConnection connection = null;
-		try {
-			URL url = new URL(urlWebservice);
-			connection = (HttpURLConnection) url.openConnection();
-
-			InputStream inputStream = connection.getInputStream();
-			return getStringFromInputStream(inputStream);
-
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		} finally {
-			connection.disconnect();
-		}
+	private void GoPage(String link) throws IOException { 
+		FacesContext.getCurrentInstance().getExternalContext().redirect(link);
 	}
-
 }
