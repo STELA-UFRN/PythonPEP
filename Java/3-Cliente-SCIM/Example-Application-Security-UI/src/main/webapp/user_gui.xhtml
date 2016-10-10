@@ -18,5 +18,10 @@
 			<h:commandButton value="List Users" action="#{userScimMBean.getUsers}" />
 		</h:form>
 		<h:outputLabel escape="false" value="#{userScimMBean.resultUsersList}"></h:outputLabel>
+		
+		<h:form>
+			<h:commandButton value="Create User Test" action="#{userScimMBean.createUser}" />
+		</h:form>
+		<h:outputLabel escape="false" value="#{userScimMBean.resultCreateUser}"></h:outputLabel>
 	</h:body>
 </html>
