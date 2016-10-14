@@ -1,0 +1,14 @@
+idm:
+    restart: always
+    image: fiware/idm
+    ports:
+        - 8000:8000
+        - 5000:5000
+
+pep-proxy:
+    restart: always
+    image: fiware/pep-proxy
+    ports:
+        - 80:80
+    volumes:
+        - ~/Documents/ufrn/projeto/Example-Application-Security/fiware/pep-proxy/config/config.js:/opt/fiware-pep-proxy/config.js

@@ -61,9 +61,20 @@ class OAuth2(object):
                "</domainProperties>"
         response = requests.post(self.authzforce_uri + 'authzforce-ce/domains', headers=headers, data=data)
         result = xmltodict.parse(response.text)
-        return result['ns2:link']['@href']
+        return result['ns4:link']['@href']
 
-    def create_domain_properties(self, domainId):
+    def get_domain_properties(self, domainId):
         headers = {"Accept": "application/xml; charset=UTF-8"}
-        response = requests.get(self.idm_address + 'domains/' + domainId + '/properties', headers=headers)
+        response = requests.get(self.authzforce_uri + 'domains/' + domainId + '/properties', headers=headers)
         return response.text
+
+    def get_domain_list(self):
+        response = requests.get(self.idm_address + 'authzforce-ce/domains')
+        return response.text
+
+    def single_user(self, token):
+        headers = {"X-Auth-Token": token}
+        response = requests.get(self.idm_address + 'v3/OS-ROLES/users/role_assignments?user_id=idm_user', headers=headers)
+        return response
+
+    #GET /v3/OS-ROLES/users/role_assignments?user_id=idm_user HTTP/1.1

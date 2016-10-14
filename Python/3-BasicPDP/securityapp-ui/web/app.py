@@ -1,8 +1,7 @@
 import requests
-from config import BaseConfig
 from flask import Flask, render_template, request, redirect, Markup, session
 from oauth_fiware import OAuth2
-
+from config import BaseConfig
 
 try:
     import simplejson as json
@@ -70,10 +69,22 @@ def create_domain():
     return render_template('index.html', content=Markup('id domain: ' + str(session['id_domain'])))
 
 
-@app.route("/create_domain_properties")
+@app.route("/get_domain_properties")
 def create_domain_properties():
-    info = auth_app.create_domain_properties(session['id_domain'])
+    info = auth_app.get_domain_properties(session['id_domain'])
     return render_template('index.html', content=Markup(info))
+
+
+@app.route("/get_domain_list")
+def get_domain_list():
+    info = auth_app.get_domain_list()
+    return render_template('index.html', content=Markup(info))
+
+
+@app.route("/list_users", methods=['GET'])
+def list_users():
+    resp = auth_app.single_user(session['access_token'])
+    return render_template('index.html', content=resp)
 
 
 @app.route("/username", methods=['GET'])
@@ -102,6 +113,11 @@ def add():
     response = requests.get(auth_app.proxy_address + "service2/add/" + request.args.get('name'), headers=headers)
     return render_template('index.html', content=response.text)
 
+
+# Sample HTTP error handling
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('404.html'), 404
 
 if __name__ == '__main__':
     app.run()
