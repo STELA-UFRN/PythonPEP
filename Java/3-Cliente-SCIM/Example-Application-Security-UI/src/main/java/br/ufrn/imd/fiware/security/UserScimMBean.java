@@ -3,13 +3,16 @@ package br.ufrn.imd.fiware.security;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped; 
-
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 
+import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
+import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -38,8 +41,8 @@ public class UserScimMBean extends BaseBean implements Serializable {
 	private String edit_userId;
 	
 	private String delete_userId;
-	private String find_userId;
-	
+	private String find_userId; 
+		
 	public UserScimMBean() { 
 		auth();
 	}
@@ -47,14 +50,14 @@ public class UserScimMBean extends BaseBean implements Serializable {
 	private void auth() {
 		Client client = ClientBuilder.newClient();   
 		Entity payload = Entity.json("{ \"auth\": { \"identity\": { \"methods\": [\"password\"], \"password\": { \"user\": {  \"name\": \"idm\", \"domain\": { \"id\": \"default\" }, \"password\": \"idm\"  } } } } }");
-		
+
 		Response response = client.target("http://192.168.99.100:5000/v3/auth/tokens")
-		  .request(MediaType.TEXT_PLAIN_TYPE)  
+		  .request(MediaType.TEXT_PLAIN_TYPE) 
 		  .header("Content-Type", "application/json")
 		  .post(payload);
 
 		accessToken = response.getHeaders().get("X-Subject-Token").get(0).toString();  
-	}
+	} 
 	
 	public void getUsers() throws IOException { 
 		Client client = ClientBuilder.newClient();  
