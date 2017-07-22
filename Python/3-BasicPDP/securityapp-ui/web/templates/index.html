@@ -1,68 +1,52 @@
 {% extends "_base.html" %} 
-{% block content %} 
+{% block content %}
+    {% if error %}
+    <div class="alert alert-danger">
+        <p class=error><strong>Error:</strong> {{ error }}
+    </div>
+    {% endif %}
+
 	<div class="page-header">
         <h1>SecurityApp UI</h1>
-        <p class="lead">Basic Interface.</p>
+        <p class="lead">Basic Interface SecurityApp</p>
     </div>
 
-	<div> 
-		{{content}}
+	<div>
+        {% if content %}
+		    {{content}}
+            <hr>
+        {% endif %}
 	</div>
 
 	<br>
 
-	<form action="/hello" method="GET" class="form-inline">
-		<input type="submit" class="btn btn-default" name="hello" value="Hello World">
-	</form>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">Auth</a></li>
+        <li><a data-toggle="tab" href="#menu1">Domain</a></li>
+        <li><a data-toggle="tab" href="#menu2">Keyrock User</a></li>
+        <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+    </ul>
 
-	<hr>
-
-	<form action="/username" method="GET" class="form-inline">
-        <div class="row">
-            <div class="col-xs-10">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <label for="label-username" style="padding-top: 5px;">Username:</label>
-                    </div>
-                    <div class="col-xs-9">
-                        <input class="form-control" type="text" name="username">
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-2">
-                <input class="btn btn-default" type="submit" value="Greet">
-            </div>
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <h3>Auth</h3>
+            <br>
+            {% include 'auth.html' %}
         </div>
-	</form>
-
-	<hr>
-
-	<form action="/list" method="GET">
-		<input type="submit" class="btn btn-default" name="list" value="List Names">
-	</form>
-
-	<hr>
-
-	<form action="/add" method="GET" class="form-inline">
-		<div class="row">
-            <div class="col-xs-10">
-                <div class="row">
-                    <div class="col-xs-3">
-                        <label for="label-adduser" style="padding-top: 5px;">New user:</label>
-                    </div>
-                    <div class="col-xs-9">
-                        <input class="form-control" type="text" name="name">
-                    </div>
-		        </div>
-            </div>
-            <div class="col-xs-2">
-		        <input class="btn btn-default" type="submit" value="Add">
-            </div>
+        <div id="menu1" class="tab-pane fade">
+            <h3>Domain</h3>
+            <br>
+            {% include 'domain.html' %}
         </div>
-	</form>
-	<hr>
-	<br><br>
-	<form action="/reset" method="GET" class="form-inline">
-		<input type="submit" class="btn btn-default" name="reset" value="reset">
-	</form> 
+        <div id="menu2" class="tab-pane fade">
+          <h3>Keyrock User</h3>
+            <br>
+            {% include 'keyrock_user.html' %}
+        </div>
+        <div id="menu3" class="tab-pane fade">
+          <h3>Menu 3</h3>
+          <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+        </div>
+    </div>
+
 {% endblock %}

@@ -11,7 +11,6 @@ except ImportError:
 app = Flask(__name__)
 app.config.from_object(BaseConfig)
 
-url_service = 'http://127.0.0.1:5055/'  # REST APP ADDRESS
 auth_app = OAuth2()
 
 
@@ -57,7 +56,11 @@ def user_info():
 
     user_info = auth_app.get_user_info(session['access_token'])
     content_user = 'username: {} </br> email: {}'.format(user_info['displayName'], user_info['email'])
-    return render_template('index.html', content=Markup(content_user))
+    roles = user_info['roles']
+    session['roles'] = []
+    for role in roles:
+        session['roles'].append(str(role['name']))
+    return render_template('index.html', content=Markup(content_user + '</br> roles: ' + str(session['roles'])))
 
 
 @app.route("/username", methods=['GET'])
@@ -65,13 +68,15 @@ def username():
     if request.args.get('username') == '':
         error = 'Fill the name field first!'
         return render_template('index.html', error=error)
-    response = requests.get(url_service + "service1/" + request.args.get('username'))
+    headers = {"X-Auth-Token": session['access_token']}
+    response = requests.get(auth_app.proxy_address + "service1/" + request.args.get('username'), headers=headers)
     return render_template('index.html', content=response.text)
 
 
 @app.route("/list", methods=['GET'])
 def list():
-    response = requests.get(url_service + "service2/list")
+    headers = {"X-Auth-Token": session['access_token']}
+    response = requests.get(auth_app.proxy_address + "service2/list", headers=headers)
     return render_template('index.html', content=response.text)
 
 
@@ -80,7 +85,8 @@ def add():
     if request.args.get('name') == '':
         error = 'Fill the name field first!'
         return render_template('index.html', error=error)
-    response = requests.get(url_service + "service2/add/" + request.args.get('name'))
+    headers = {'X-Auth-Token': session['access_token']}
+    response = requests.get(auth_app.proxy_address + "service2/add/" + request.args.get('name'), headers=headers)
     return render_template('index.html', content=response.text)
 
 

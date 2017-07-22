@@ -15,17 +15,18 @@ except ImportError:
 
 class OAuth2(object):
     def __init__(self):
-        self.client_id = '185cb1d8444e41ec9b9ce5fe85ac857f'  # IDM APP CLIENT ID
-        self.client_secret = 'c30a8cae5eb7482d9bbeb8f37e0a34ec'  # IDM APP CLIENT SECRET
+        self.client_id = '32013d58399c46298373987cc58fd08b'  # IDM APP CLIENT ID
+        self.client_secret = '987ecbdcc7864948b3b7b716f18175ae'  # IDM APP CLIENT SECRET
 
         raw_auth_code = '{}:{}'.format(self.client_id, self.client_secret)
         self.base_64_auth_code = base64.b64encode(raw_auth_code.encode('utf-8')).decode('utf-8')
 
-        self.redirect_uri = 'http://127.0.0.1:5050/auth'  # CALLBACK URL REGISTERED ON IDM (UI APP AUTH ADDRESS)
+        self.redirect_uri = 'http://localhost:5050/auth'  # CALLBACK URL REGISTERED ON IDM (UI APP AUTH ADDRESS)
 
+        self.proxy_address = "http://192.168.99.100:80/"
         self.idm_address = 'http://192.168.99.100:8000/'  # IDM ADDRESS
-        self.authorization_url = self.idm_address + 'oauth2/authorize' # AUTHORIZATION URL
-        self.token_url = self.idm_address + 'oauth2/token' # TOKEN URL
+        self.authorization_url = self.idm_address + 'oauth2/authorize'  # AUTHORIZATION URL
+        self.token_url = self.idm_address + 'oauth2/token'  # TOKEN URL
 
     def authorize_url(self, **kwargs):
         oauth_params = {'response_type': 'code', 'redirect_uri': self.redirect_uri, 'client_id': self.client_id}

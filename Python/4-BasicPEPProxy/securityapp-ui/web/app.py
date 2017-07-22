@@ -75,7 +75,7 @@ def username():
 
 @app.route("/list", methods=['GET'])
 def list():
-    headers = {"X-Auth-Token": session['access_token']}
+    headers = {"X-Auth-Token": session['access_token'], "Authorization": "bearer " + session['access_token']}
     response = requests.get(auth_app.proxy_address + "service2/list", headers=headers)
     return render_template('index.html', content=response.text)
 
@@ -91,4 +91,4 @@ def add():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=5050)

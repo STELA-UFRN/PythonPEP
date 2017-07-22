@@ -3,8 +3,8 @@ import os
 
 
 class BaseConfig(object):
-    SECRET_KEY = os.environ['SECRET_KEY']
-    DEBUG = os.environ['DEBUG']
+    SECRET_KEY = 's3cr3t3'
+    DEBUG = True
 
 
     # class BaseConfig(object):
