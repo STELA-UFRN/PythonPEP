@@ -257,14 +257,14 @@ if __name__ == "__main__":
     logging.basicConfig(filename='script-keyrock.log', filemode='w', level=logging.DEBUG)
     logging.debug('starting...')
 
-    keystone_url = "http://10.7.49.61:5000/"
+    keystone_url = "http://10.7.49.177:5000/"
     token = None
     roles_id = []
 
     token = get_token(keystone_url)
-    list_users(keystone_url, token)
-    list_permissions(keystone_url, token)
-    list_roles(keystone_url, token)
-    create_user(keystone_url, token)
-    put_role_in_user('gabicavalcantesilva', '5fca86e2905e4970afcc01be4e4e6768', '395cf9ff22254e0eb36bfaed45eedbb9', keystone_url, token)
+   # list_users(keystone_url, token)
+   # list_permissions(keystone_url, token)
+   # list_roles(keystone_url, token)
+   # create_user(keystone_url, token)
+    put_role_in_user('idm_user', '4b4323edd6ea4358991aa99fccd1301e', '8cb58e30b6ae47c1944f3c71f5ee8a65', keystone_url, token)
     # list_users(keystone_url, token)
