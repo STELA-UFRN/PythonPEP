@@ -3,6 +3,14 @@
 # Run: docker-compose up 
 # Run in daemon: docker-compose up -d
 
+
+authzforce:
+    image: fiware/authzforce-ce-server:release-5.4.1
+    hostname: authzforce
+    container_name: authzforce
+    expose:
+        - "8080"
+
 keyrock:
     image: fiware/idm:v5.3.0
     hostname: keyrock

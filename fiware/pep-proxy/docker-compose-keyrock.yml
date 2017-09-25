@@ -14,15 +14,3 @@ keyrock:
         - "5000:5000"
         - "8000:8000"
 
-pepproxy:
-    build: Docker/fiware-pep-proxy
-    hostname: pepproxy
-    container_name: pepproxy
-    expose:
-        - "80"
-    ports:
-        - "80:80"
-    links:
-        - authzforce
-        - keyrock
-
