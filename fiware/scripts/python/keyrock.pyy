@@ -177,12 +177,12 @@ def list_users(keystone_url, token):
 
 def create_user(keystone_url, token):
     json_payload = {
-        "userName": "joaodasilva",
-        "displayName": "Joao da Silva",
+        "userName": "gabicavalcantesilva",
+        "displayName": "Gabriela Cavalcante",
         "password": "75759597",
         "emails": [
             {
-                "value": "joaodasilva@gmail.com"
+                "value": "gabicavalcantesilva@gmail.com"
             }
         ]
     }
@@ -262,10 +262,9 @@ if __name__ == "__main__":
     roles_id = []
 
     token = get_token(keystone_url)
-   # list_users(keystone_url, token)
+    list_users(keystone_url, token)
    # list_permissions(keystone_url, token)
    # list_roles(keystone_url, token)
-    create_user(keystone_url, token)
-    list_users(keystone_url, token)
-   # put_role_in_user('idm_user', '4a70abb1e2ab4af1bdda2f698466cf59', 'a178a1012ed6472e9f18b7dd494b5603', keystone_url, token)
+   # create_user(keystone_url, token)
+   # put_role_in_user('idm_user', '6521c09b0ae14fa2b9e4dc63fa3358da', 'a911b57ae2b144c58e22c1aebfd156d6', keystone_url, token)
     # list_users(keystone_url, token)

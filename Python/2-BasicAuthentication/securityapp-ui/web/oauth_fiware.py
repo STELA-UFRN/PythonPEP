@@ -15,8 +15,8 @@ except ImportError:
 
 class OAuth2(object):
     def __init__(self):
-        self.client_id = '185cb1d8444e41ec9b9ce5fe85ac857f'  # IDM APP CLIENT ID
-        self.client_secret = 'c30a8cae5eb7482d9bbeb8f37e0a34ec'  # IDM APP CLIENT SECRET
+        self.client_id = '5ddd4af721ee422da0307fd8cfa5f248'  # IDM APP CLIENT ID
+        self.client_secret = '286bd543918e4fefb497155bbe24fe11'  # IDM APP CLIENT SECRET
 
         raw_auth_code = '{}:{}'.format(self.client_id, self.client_secret)
         self.base_64_auth_code = base64.b64encode(raw_auth_code.encode('utf-8')).decode('utf-8')

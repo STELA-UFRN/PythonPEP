@@ -1,21 +1,40 @@
-idm:
-    restart: always
-    image: fiware/idm
-    ports:
-        - 8000:8000
-        - 5000:5000
+# SGeOL Docker 
+# Build: docker-compose pull
+# Run: docker-compose up 
+# Run in daemon: docker-compose up -d
 
-pep-proxy:
-    restart: always
-    image: fiware/pep-proxy
-    ports:
-        - 80:80
-    volumes:
-        - ~/Documents/ufrn/projeto/Example-Application-Security/fiware/pep-proxy/config/config.js:/opt/fiware-pep-proxy/config.js
 
-pdp-proxy:
-    restart: always
+authzforce:
     image: fiware/authzforce-ce-server:release-5.4.1
-    container_name: azf
+    hostname: authzforce
+    container_name: authzforce
+    expose:
+        - "8080"
     ports:
-      - "8080:8080"
+        - "8080:8080"
+    environment:
+        - JVM_OPTS=-Xmx1g -Xms1g -XX:MaxPermSize=1024m
+
+keyrock:
+    build: Docker/fiware-pep-proxy/Dockerfile-keyrock
+    hostname: keyrock
+    container_name: keyrock
+    expose:
+        - "5000"
+        - "8000"
+    ports:
+        - "5000:5000"
+        - "8000:8000"
+
+pepproxy:
+    build: Docker/fiware-pep-proxy
+    hostname: pepproxy
+    container_name: pepproxy
+    expose:
+        - "80"
+    ports:
+        - "80:80"
+    links:
+        - authzforce
+        - keyrock
+
