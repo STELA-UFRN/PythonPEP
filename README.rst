@@ -38,7 +38,8 @@ Aplicações Web
 Preparando o Ambiente:
 ^^^^^^^^^^^^^^^^^^^^^^
 
-- Guia de Instalação
+Guia de Instalação
+==================
 
 Antes de utilizar uma aplicação desejada, é necessário efetuar a seguinte instalação de programas:
 
@@ -50,10 +51,11 @@ Antes de utilizar uma aplicação desejada, é necessário efetuar a seguinte in
 
 Após a instalação é necessário fazer clone ou download no repositório que contém as aplicações:
 
-- Faça clone do seguinte repositório: `Example-Application-Security <https://IreneGinani@projetos.imd.ufrn.br/SmartMetropolis-InfraestruturaGroup/SGeoL-Docker.git>`_
+- Faça clone do seguinte repositório: `Example-Application-Security <https://IreneGinani@projetos.imd.ufrn.br/SmartMetropolis-InfraestruturaGroup/Example-Application-Security.git>`_
 
 
-- Guia de Configuração
+Guia de Configuração
+====================
 
 Após efetuar os passos da instalação é necessário configurar o ambiente para que possamos executar a aplicação desejada.
 
@@ -79,7 +81,8 @@ Lembrando que as informações do pepproxy é possível recuperar na interface d
         self.idm_address = 'http://IP-APP:8000/' ;
 
 
-- Guia de Execução
+Guia de Execução
+================
 
 Após efetuar os passos de Instalação e Configuração, para rodar a aplicação desejada é necessário que:
 
@@ -96,8 +99,6 @@ Após efetuar os passos de Instalação e Configuração, para rodar a aplicaç�
 	sudo docker-compose up
 
 
-
-- Guia de Criação
 Guia de Criação
 ===============
 
