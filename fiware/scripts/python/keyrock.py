@@ -268,4 +268,4 @@ if __name__ == "__main__":
     create_user(keystone_url, token)
     list_users(keystone_url, token)
    # put_role_in_user('idm_user', '4a70abb1e2ab4af1bdda2f698466cf59', 'a178a1012ed6472e9f18b7dd494b5603', keystone_url, token)
-    # list_users(keystone_url, token)
+   # list_users(keystone_url, token)
