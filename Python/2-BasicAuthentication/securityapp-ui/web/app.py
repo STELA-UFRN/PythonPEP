@@ -11,7 +11,7 @@ except ImportError:
 app = Flask(__name__)
 app.config.from_object(BaseConfig)
 
-url_service = 'http://127.0.0.1:5055/'  # REST APP ADDRESS
+url_service = 'http://10.51.66.221:5056/'  # REST APP ADDRESS
 auth_app = OAuth2()
 
 
@@ -23,6 +23,7 @@ def index():
 
 @app.route("/authenticate")
 def authenticate():
+    print("Oooi")
     auth_url = auth_app.authorize_url()
     return redirect(auth_url)
 
@@ -73,7 +74,7 @@ def username():
 def list():
     response = requests.get(url_service + "service2/list")
     return render_template('index.html', content=response.text)
-
+    
 
 @app.route("/add", methods=['GET'])
 def add():
@@ -85,4 +86,4 @@ def add():
 
 
 if __name__ == '__main__':
-    app.run(port=5050)
+    app.run(port=5055)

@@ -547,11 +547,13 @@ SECURITY_GROUP_RULES = {
 
 # The hash algorithm to use for authentication tokens. This must
 # match the hash algorithm that the identity server and the
-# auth_token middleware are using. Allowed values are the
+# auth_token middleware are using. 	Allowed values are the
 # algorithms supported by Python's hashlib library.
 # OPENSTACK_TOKEN_HASH_ALGORITHM = 'md5'
+
 # USER REGISTRATION
 # KEYSTONE ADMIN ACCOUNT FOR THE IdM
+	
 IDM_USER_CREDENTIALS = {
     'username': 'idm',
     'password': 'idm',
@@ -627,7 +629,7 @@ FIWARE_PROVIDER_ROLE_ID = 'provider'
 PAGE_SIZE = 5
 
 # ACCESS CONTROL GE
-ACCESS_CONTROL_URL = 'http://10.7.49.177:8080'
+ACCESS_CONTROL_URL = 'http://10.51.66.221:8080'
 ACCESS_CONTROL_MAGIC_KEY = 'undefined'
 
 # CORS configuration
