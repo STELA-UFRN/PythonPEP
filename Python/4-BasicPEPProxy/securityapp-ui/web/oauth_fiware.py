@@ -23,8 +23,8 @@ class OAuth2(object):
 
         self.redirect_uri = 'http://localhost:5050/auth'  # CALLBACK URL REGISTERED ON IDM (UI APP AUTH ADDRESS)
 
-        self.proxy_address = "http://192.168.0.23:80/"
-        self.idm_address = 'http://192.168.0.23:8000/'  # IDM ADDRESS
+        self.proxy_address = "http://192.168.99.100:80/"
+        self.idm_address = 'http://192.168.99.100:8000/'  # IDM ADDRESS
         self.authorization_url = self.idm_address + 'oauth2/authorize'  # AUTHORIZATION URL
         self.token_url = self.idm_address + 'oauth2/token'  # TOKEN URL
 

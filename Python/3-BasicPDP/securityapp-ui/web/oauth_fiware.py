@@ -24,12 +24,12 @@ class OAuth2(object):
 
         self.redirect_uri = 'http://127.0.0.1:5050/auth'  # CALLBACK URL REGISTERED ON IDM (UI APP AUTH ADDRESS)
 
-        self.proxy_address = "http://192.168.0.23:80/"
-        self.idm_address = 'http://192.168.0.23:8000/'  # IDM ADDRESS
+        self.proxy_address = "http://192.168.99.100:80/"
+        self.idm_address = 'http://192.168.99.100:8000/'  # IDM ADDRESS
         self.authorization_url = self.idm_address + 'oauth2/authorize'  # AUTHORIZATION URL
         self.token_url = self.idm_address + 'oauth2/token'  # TOKEN URL
 
-        self.authzforce_uri = 'http://192.168.0.23:8080/'
+        self.authzforce_uri = 'http://192.168.99.100:8080/'
 
     def authorize_url(self, **kwargs):
         oauth_params = {'response_type': 'code', 'redirect_uri': self.redirect_uri, 'client_id': self.client_id}
