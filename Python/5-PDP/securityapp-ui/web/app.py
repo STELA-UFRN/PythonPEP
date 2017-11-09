@@ -63,26 +63,17 @@ def user_info():
     return render_template('index.html', content=Markup(content_user + '</br> roles: ' + str(session['roles'])))
 
 
-@app.route("/bairros3", methods=['GET'])
+@app.route("/username", methods=['GET'])
 def username():
-    if 'access_token' not in session:
-        error = 'You are not authenticated!'
+    if request.args.get('username') == '':
+        error = 'Fill the name field first!'
         return render_template('index.html', error=error)
-
-    error = request.args.get('error', '')
-    if error:
-        return "Error: " + error
-
-    user_info = auth_app.get_user_info(session['access_token'])
-
     headers = {"X-Auth-Token": session['access_token']}
-    response = requests.get(auth_app.proxy_address + "/v1/layer/bairros?from=3", headers=headers)
-    if (response.text == "ok"):
-        return redirect("http://10.7.31.52:8080/sgeol-dm/v1/layer/bairros?from=3", code=302)
-    else:
-        return render_template('index.html', content=response.text)
+    response = requests.get(auth_app.proxy_address + "service1/" + request.args.get('username'), headers=headers)
+    return render_template('index.html', content=response.text)
 
-@app.route("/bairros", methods=['GET'])
+
+@app.route("/list", methods=['GET'])
 def list():
     if 'access_token' not in session:
         error = 'You are not authenticated!'
@@ -95,31 +86,19 @@ def list():
     user_info = auth_app.get_user_info(session['access_token'])
 
     headers = {"X-Auth-Token": session['access_token']}
-    response = requests.get(auth_app.proxy_address + "/v1/layer/bairros", headers=headers)
-    if (response.text == "ok"):
-        return redirect("http://10.7.31.52:8080/sgeol-dm/v1/layer/bairros", code=302)
-    else:
-        return render_template('index.html', content=response.text)
+    response = requests.get(auth_app.proxy_address + "service2/list", headers=headers)
+    return render_template('index.html', content=response.text)
 
 
-@app.route("/layers", methods=['GET'])
+@app.route("/add", methods=['GET'])
 def add():
-    if 'access_token' not in session:
-        error = 'You are not authenticated!'
+    if request.args.get('name') == '':
+        error = 'Fill the name field first!'
         return render_template('index.html', error=error)
+    headers = {'X-Auth-Token': session['access_token']}
+    response = requests.get(auth_app.proxy_address + "service2/add/" + request.args.get('name'), headers=headers)
+    return render_template('index.html', content=response.text)
 
-    error = request.args.get('error', '')
-    if error:
-        return "Error: " + error
-
-    user_info = auth_app.get_user_info(session['access_token'])
-
-    headers = {"X-Auth-Token": session['access_token']}
-    response = requests.get(auth_app.proxy_address + "/v1/layer", headers=headers)
-    if (response.text == "ok"):
-        return redirect("http://10.7.31.52:8080/sgeol-dm/v1/layer", code=302)
-    else:
-        return render_template('index.html', content=response.text)
 
 if __name__ == '__main__':
     app.run(port=5055)

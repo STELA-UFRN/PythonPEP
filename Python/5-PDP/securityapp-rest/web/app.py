@@ -13,21 +13,19 @@ def hello(username=None):
     return jsonify(result='Hello, {0}'.format(username), status=200)
 
 
-@app.route('/v1/layer/bairros')
+@app.route('/service2/list')
 def list():
-    #list_users = ['gabi', 'lucas', 'felipe']
-    return "ok"
+    list_users = ['gabi', 'lucas', 'felipe']
+    return jsonify(result=tuple(list_users), status=200)
 
 
-@app.route('/v1/layer/bairros?from=3')
-def username(username=None):
-    #list_users = ['gabi', 'lucas', 'felipe']
-    return "ok"
-
-@app.route('/v1/layer')
+@app.route('/service2/add/<username>')
 def add(username=None):
-    #list_users = ['gabi', 'lucas', 'felipe']
-    return "ok"
+    list_users = ['gabi', 'lucas', 'felipe']
+    if not username:
+        return jsonify(result=tuple(list_users), status=200)
+    list_users.append(username)
+    return jsonify(result=tuple(list_users), status=200)
 
 
 if __name__ == '__main__':
