@@ -25,7 +25,6 @@ def authenticate():
     auth_url = auth_app.authorize_url()
     return redirect(auth_url)
 
-
 @app.route('/auth', methods=['GET', 'POST'])
 def auth():
     error = request.args.get('error', '')

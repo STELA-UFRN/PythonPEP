@@ -16,14 +16,14 @@ config.account_host = 'http://keyrock:8000';
 config.keystone_host = 'keyrock';
 config.keystone_port = 5000;
 
-config.app_host = '10.51.66.221';  //config do app REST (TODO: inserir via ENV?)
+config.app_host = '10.7.49.180';  //config do app REST (TODO: inserir via ENV?)
 config.app_port = '5056';
 // Use true if the app server listens in https
 config.app_ssl = false;
 
 // Credentials obtained when registering PEP Proxy in Account Portal
-config.username = 'pep_proxy_f2bc01928d824494b5d22b64f3e36729';
-config.password = '9bdec391a6e64955b81517c22b59986e';
+config.username = 'pep_proxy_bf89166a7e7b4278a115e524e04e2c12';
+config.password = '5201a5f576ff432ba8fbe52f9bfc4176';
 
 // in seconds
 config.cache_time = 300;

@@ -4,6 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from openstack_dashboard import exceptions
 
+from corsheaders.signals import check_request_enabled
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -76,6 +78,7 @@ HORIZON_CONFIG = {
 # Disable simplified floating IP address management for deployments with
 # multiple floating IP pools or complex network requirements.
 # HORIZON_CONFIG["simple_ip_management"] = False
+
 # Turn off browser autocompletion for forms including the login form and
 # the database creation workflow if so desired.
 # HORIZON_CONFIG["password_autocomplete"] = "off"
@@ -106,7 +109,7 @@ SECRET_KEY = secret_key.generate_or_read_from_file(
 #}
 
 CACHES = {
- 'default': {
+    'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
     }
 }
@@ -115,6 +118,7 @@ CACHES = {
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Or send them to /dev/null
 #EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+
 # Custom email address and web domain
 DEFAULT_FROM_EMAIL = 'no-reply@account.lab.fiware.org'
 EMAIL_URL = 'https://account.lab.fiware.org'
@@ -125,6 +129,7 @@ EMAIL_SUBJECT_PREFIX = '[FIWARE Lab]'
 # EMAIL_PORT = 25
 # EMAIL_HOST_USER = 'djangomail'
 # EMAIL_HOST_PASSWORD = 'top-secret!'
+
 # For multiple regions uncomment this configuration, and add (endpoint, title).
 # AVAILABLE_REGIONS = [
 #     ('http://cluster1.example.com:5000/v2.0', 'cluster1'),
@@ -143,6 +148,7 @@ OPENSTACK_KEYSTONE_DEFAULT_ROLE = "member"
 
 # The CA certificate to use to verify SSL connections
 # OPENSTACK_SSL_CACERT = '/path/to/cacert.pem'
+
 # The OPENSTACK_KEYSTONE_BACKEND settings can be used to identify the
 # capabilities of the auth backend for Keystone.
 # If Keystone has been configured to use LDAP as the auth backend then set
@@ -233,6 +239,7 @@ IMAGE_CUSTOM_PROPERTY_TITLES = {
 # custom properties should not be displayed in the Image Custom Properties
 # table.
 IMAGE_RESERVED_CUSTOM_PROPERTIES = []
+
 # OPENSTACK_ENDPOINT_TYPE specifies the endpoint type to use for the endpoints
 # in the Keystone service catalog. Use this setting when Horizon is running
 # external to the OpenStack environment. The default is 'publicURL'.
@@ -252,6 +259,7 @@ API_RESULT_LIMIT = 1000
 API_RESULT_PAGE_SIZE = 20
 
 # The timezone of the server. This should correspond with the timezone
+# of your entire OpenStack installation, and hopefully be in UTC.
 TIME_ZONE = "UTC"
 
 # When launching an instance, the menu of available flavors is
@@ -271,6 +279,7 @@ TIME_ZONE = "UTC"
 # policy rule files. The content of these files should match the files the
 # OpenStack services are using to determine role based access control in the
 # target installation.
+
 # Path to directory containing policy.json files
 #POLICY_FILES_PATH = os.path.join(ROOT_PATH, "conf")
 # Map of local copy of service policy files
@@ -330,7 +339,7 @@ LOGGING = {
             'propagate': False,
         },
         'novaclient': {
-           'handlers': ['console'],
+            'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': False,
         },
@@ -340,7 +349,7 @@ LOGGING = {
             'propagate': False,
         },
         'keystoneclient': {
-           'handlers': ['console'],
+            'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': False,
         },
@@ -380,7 +389,7 @@ LOGGING = {
             'propagate': False,
         },
         'nose.plugins.manager': {
-           'handlers': ['console'],
+            'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': False,
         },
@@ -420,12 +429,6 @@ SECURITY_GROUP_RULES = {
         'from_port': '1',
         'to_port': '65535',
     },
-    'all_udp': {
-        'name': _('All UDP'),
-        'ip_protocol': 'udp',
-        'from_port': '1',
-        'to_port': '65535',
-    },
     'all_icmp': {
         'name': _('All ICMP'),
         'ip_protocol': 'icmp',
@@ -436,6 +439,7 @@ SECURITY_GROUP_RULES = {
         'name': 'SSH',
         'ip_protocol': 'tcp',
         'from_port': '22',
+        'to_port': '22',
     },
     'smtp': {
         'name': 'SMTP',
@@ -465,7 +469,8 @@ SECURITY_GROUP_RULES = {
         'name': 'IMAP',
         'ip_protocol': 'tcp',
         'from_port': '143',
-
+        'to_port': '143',
+    },
     'ldap': {
         'name': 'LDAP',
         'ip_protocol': 'tcp',
@@ -484,17 +489,10 @@ SECURITY_GROUP_RULES = {
         'from_port': '465',
         'to_port': '465',
     },
-
     'imaps': {
         'name': 'IMAPS',
         'ip_protocol': 'tcp',
         'from_port': '993',
-        'to_port': '993',
-    },
-    'pop3s': {
-        'name': 'POP3S',
-        'ip_protocol': 'tcp',
-        'from_port': '995',
         'to_port': '993',
     },
     'pop3s': {
@@ -547,16 +545,15 @@ SECURITY_GROUP_RULES = {
 
 # The hash algorithm to use for authentication tokens. This must
 # match the hash algorithm that the identity server and the
-# auth_token middleware are using. 	Allowed values are the
+# auth_token middleware are using. Allowed values are the
 # algorithms supported by Python's hashlib library.
 # OPENSTACK_TOKEN_HASH_ALGORITHM = 'md5'
 
 # USER REGISTRATION
 # KEYSTONE ADMIN ACCOUNT FOR THE IdM
-	
 IDM_USER_CREDENTIALS = {
     'username': 'idm',
-    'password': 'idm',
+    'password': '$$IDM_PASS',
     'project': 'idm',
 }
 
@@ -578,10 +575,11 @@ FIWARE_DEFAULT_CLOUD_ROLE_ID = '8605715701e44bf5be1e2fbe49cab080'
 
 # noCAPTCHA reCAPTCHA
 # Get your keys at: https://www.google.com/recaptcha/admin#createsite
-# More documentation at: https://github.com/ImaginaryLandscape/django-nocaptcha$
+# More documentation at: https://github.com/ImaginaryLandscape/django-nocaptcha-recaptcha
 USE_CAPTCHA = False
 NORECAPTCHA_SITE_KEY   = '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
 NORECAPTCHA_SECRET_KEY = '6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe'
+
 # summernote
 SUMMERNOTE_CONFIG = {
     # Use native HTML tags (`<b>`, `<i>`, ...) instead of style attributes
@@ -618,9 +616,11 @@ FIWARE_ALLOWED_REGIONS = {
 FIWARE_DEFAULT_DURATION = {
     KEYSTONE_TRIAL_ROLE: 14,
     KEYSTONE_COMMUNITY_ROLE: 270,
+    'user_password': 180,
 }
 
 MAX_TRIAL_USERS = 100
+
 # Default FIWARE roles
 FIWARE_PURCHASER_ROLE_ID = 'purchaser'
 FIWARE_PROVIDER_ROLE_ID = 'provider'
@@ -629,7 +629,7 @@ FIWARE_PROVIDER_ROLE_ID = 'provider'
 PAGE_SIZE = 5
 
 # ACCESS CONTROL GE
-ACCESS_CONTROL_URL = 'http://10.7.49.177:8080'
+ACCESS_CONTROL_URL = '10.7.49.180:8080'
 ACCESS_CONTROL_MAGIC_KEY = 'undefined'
 
 # CORS configuration
@@ -641,6 +641,10 @@ CORS_ORIGIN_WHITELIST = (
     'data.lab.fiware.org',
     'help.lab.fiware.org',
 )
+def cors_allow_api_to_everyone(sender, request, **kwargs):
+    #return request.path.startswith('/api/')
+    return False
+check_request_enabled.connect(cors_allow_api_to_everyone)
 
 # PEP PROXIES
 PEP_PROXIES_GROUP = 'pep_proxies'
@@ -650,14 +654,29 @@ PEP_PROXIES_ROLE = 'pep_proxy'
 IOT_SENSORS_GROUP = 'iot_sensors'
 IOT_SENSORS_ROLE = 'iot_sensor'
 
-
-
-
-
-
-
-
-
-
+# ENDPOINTS MANAGEMENT DASHBOARD
+SERVICE_PROJECT = 'service_project_name'
+# Description and extra roles of services that can be managed
+AVAILABLE_SERVICES = {
+    'swift': {'type': 'Object storage',
+              'description': 'Stores and retrieves arbitrary unstructured data objects via a RESTful, HTTP based API. \
+                              It is highly fault tolerant with its data replication and scale out architecture. Its \
+                              implementation is not like a file server with mountable directories.'},
+    'nova': {'type': 'Compute',
+             'description': 'Manages the lifecycle of compute instances in an OpenStack environment. Responsibilities \
+                             include spawning, scheduling and decomissioning of machines on demand.'},
+    'neutron': {'type': 'Networking',
+                'description': 'Enables network connectivity as a service for other OpenStack services, such as OpenStack \
+                                Compute. Provides an API for users to define networks and the attachments into them. Has \
+                                a pluggable architecture that supports many popular networking vendors and technologies.'},
+    'cinder': {'type': 'Block storage',
+               'description': 'Provides persistent block storage to running instances. Its pluggable driver architecture \
+                               facilitates the creation and management of block storage devices.'},
+    'heat': {'type': 'Orchestration',
+             'description': 'Orchestrates multiple composite cloud applications by using either the native HOT template \
+                             format or the AWS CloudFormation template format, through both an OpenStack-native REST API \
+                             and a CloudFormation-compatible Query API.',
+             'extra_roles': [{'role': 'admin', 'domain': 'heat'}]},
+}
 
 
