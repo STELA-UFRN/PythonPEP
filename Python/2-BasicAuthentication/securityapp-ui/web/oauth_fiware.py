@@ -15,15 +15,15 @@ except ImportError:
 
 class OAuth2(object):
     def __init__(self):
-        self.client_id = '95fec45f5f354bd4a3dd2798e9cee00a'  # IDM APP CLIENT ID
-        self.client_secret = '54acab73adcf43b4828bf8b851b53eb4'  # IDM APP CLIENT SECRET
+        self.client_id = '3d197d10fa5244768dee8a2ee5228b70'  # IDM APP CLIENT ID
+        self.client_secret = '54c7d42672104a14b3bd41f793ec6402'  # IDM APP CLIENT SECRET
 
         raw_auth_code = '{}:{}'.format(self.client_id, self.client_secret)
         self.base_64_auth_code = base64.b64encode(raw_auth_code.encode('utf-8')).decode('utf-8')
 
-        self.redirect_uri = 'http://10.51.66.221:5055/auth'  # CALLBACK URL REGISTERED ON IDM (UI APP AUTH ADDRESS)
+        self.redirect_uri = 'http://10.0.0.6:5055/auth'  # CALLBACK URL REGISTERED ON IDM (UI APP AUTH ADDRESS)
 
-        self.idm_address = 'http://10.51.66.221:8000/'  # IDM ADDRESS
+        self.idm_address = 'http://10.0.0.6:8000/'  # IDM ADDRESS
         self.authorization_url = self.idm_address + 'oauth2/authorize' # AUTHORIZATION URL
         self.token_url = self.idm_address + 'oauth2/token' # TOKEN URL
 

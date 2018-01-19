@@ -10,6 +10,8 @@ authzforce:
      container_name: authzforce
      expose:
          - "8080" 
+     ports: 
+         - "8080:8080"
 keyrock:
      build: keyrock
      hostname: keyrock
