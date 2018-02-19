@@ -3,7 +3,7 @@ Guia de Configuração
 
 Após efetuar os passos da instalação é necessário configurar o ambiente para que possamos executar a aplicação desejada.
 
-- No arquivo config.js disponível em Example-Application-Security/fiware/pep-proxy/Docker/fiware-pep-proxy/files mude as linhas.::
+- No arquivo config.js disponível em Example-Application-Security/security-components/fiware-pep-proxy/files mude as linhas.::
 
 	config.app_host = 'IP-APP';
 	config.username = 'ID-PEPPROXY-FIWARE';

@@ -11,6 +11,6 @@ Após efetuar os passos de Instalação e Configuração, para rodar a aplicaç�
 
 	sudo docker-compose up
 
-- Por fim, acessar a pasta Example-Application-Security/fiware/pep-proxy/ e efetuar o seguinte comando.::
+- Por fim, acessar a pasta Example-Application-Security/security-components/ e efetuar o seguinte comando.::
 
 	sudo docker-compose up
