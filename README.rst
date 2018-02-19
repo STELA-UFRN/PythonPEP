@@ -51,7 +51,8 @@ Antes de utilizar uma aplicação desejada, é necessário efetuar a seguinte in
 
 Após a instalação é necessário fazer clone ou download no repositório que contém as aplicações:
 
-- Faça clone do seguinte repositório: `Example-Application-Security <https://IreneGinani@projetos.imd.ufrn.br/SmartMetropolis-InfraestruturaGroup/Example-Application-Security.git>`_
+- Faça clone do seguinte repositório: `Example-Application-Security <https://IreneGinani@projetos.imd.ufrn.br/SmartMetropolis-InfraestruturaGroup/SGeoL-Docker.git>`_
+
 
 
 Guia de Configuração
@@ -59,7 +60,7 @@ Guia de Configuração
 
 Após efetuar os passos da instalação é necessário configurar o ambiente para que possamos executar a aplicação desejada.
 
-- No arquivo config.js disponível em Example-Application-Security/fiware/pep-proxy/Docker/fiware-pep-proxy/files mude as linhas.::
+- No arquivo config.js disponível em Example-Application-Security/security-components/fiware-pep-proxy/files mude as linhas.::
 
 	config.app_host = 'IP-APP';
 	config.username = 'ID-PEPPROXY-FIWARE';
@@ -94,7 +95,7 @@ Após efetuar os passos de Instalação e Configuração, para rodar a aplicaç�
 
 	sudo docker-compose up
 
-- Por fim, acessar a pasta Example-Application-Security/fiware/pep-proxy/ e efetuar o seguinte comando.::
+- Por fim, acessar a pasta Example-Application-Security/security-components/ e efetuar o seguinte comando.::
 
 	sudo docker-compose up
 
@@ -106,13 +107,13 @@ Guia de Criação
 - Caso queira criar um usuário novo, basta clicar no botão de criar novo usuário na página inicial e seguir as instruções.
 - Caso tenha optado por entrar na conta de administrador e cadastrar aplicações basta seguir as instruções abaixo: 
 - Para registrar uma aplicação clique no botão "register" como mostra a figura abaixo: 
-.. image:: documentacao-vm/source/imagens/registro-app.png
+.. image:: imagens/registro-app.png
 - Então siga os três passos para concluir o registro, inicialmente cadastre o nome da aplicação, sua descrição, a url da aplicação e a url de redirecionamento onde o token de usuário será enviado.
-.. image:: documentacao-vm/source/imagens/info-registro.png
+.. image:: imagens/info-registro.png
 - Aperte em "next" e escolha uma imagem para a aplicação, essa imagem é opcional
-.. image:: documentacao-vm/source/imagens/exibir-aplicacao.png
+.. image:: imagens/exibir-aplicacao.png
 - Por fim, identifique a política de acesso para a sua aplicação, você poderá criar novas permissões e papéis através dessa interface.
-.. image:: documentacao-vm/source/imagens/developer-portal.png    
+.. image:: imagens/developer-portal.png    
 - Após o término da configuração teremos essa página:
-.. image:: documentacao-vm/source/imagens/infos-cadastradas.png
+.. image:: imagens/infos-cadastradas.png
 Onde as informações de client secret serão usuadas na sua aplicação. Na mesma página gere um PEP-Proxy, e use suas credenciais na sua aplicação também, essas informações devem ser editadas no guia de configuração.
