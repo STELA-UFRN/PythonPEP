@@ -47,7 +47,7 @@ Antes de utilizar uma aplicação desejada, é necessário efetuar a seguinte in
 
 - Para instalação do docker-compose siga o tutorial disponível em: `Instalação do docker-compose <https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-16-04>`_
 
-- Para instalação do docker-machine siga o tutorial disponível em: `Instalação do docker-machine <https://www.digitalocean.com/community/tutorials/how-to-provision-and-manage-remote-docker-hosts-with-docker-machine-on-ubuntu-16-04>`_
+- Para instalação do docker-machine siga o tutorial disponível em:  Instalação do docker-machine <https://www.digitalocean.com/community/tutorials/how-to-provision-and-manage-remote-docker-hosts-with-docker-machine-on-ubuntu-16-04>`_
 
 Após a instalação é necessário fazer clone ou download no repositório que contém as aplicações:
 
