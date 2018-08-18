@@ -1,6 +1,6 @@
-Aplicação 1
+Aplicação 1 - Nivel 0
 ===========
 
-A aplicação 1 suporta projetos que possuem a seguinte aplicação:
+Essa aplicação não utiliza os componentes GE FIWARE, portanto não possui segurança. 
 
 .. image:: imagens/app1.png 
