@@ -19,7 +19,6 @@ public class Service1 {
 		jsonObject.put("result", "Hello, World!");
 
 		String result = jsonObject.toString();
-		System.out.println(result);
 		return Response.status(200).entity(result).build();
 	}
 	

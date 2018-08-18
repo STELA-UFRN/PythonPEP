@@ -47,6 +47,7 @@ public class SecurityAppMBean implements Serializable {
 		OAuthClientRequest codeRequest = OAuthClientRequest
 				.authorizationLocation(Config.IDM_ADDRESS + "/oauth2/authorize")
 				.setParameter("response_type", "code")
+                                .setParameter("state", "xyz")
 				.setClientId(Config.CLIENT_ID)
 				.setRedirectURI("http://" + Config.APPLICATION_ADDRESS + "/Example-Application-Security-UI/auth")
 				.buildQueryMessage();
@@ -92,8 +93,9 @@ public class SecurityAppMBean implements Serializable {
 			String accessToken = getAccessToken();
 			String strJson;
 			strJson = callWebservice(URL_SERVICE_1, accessToken);
-			//JSONObject jsonObject = new JSONObject(strJson);
-			resultHelloWorld = strJson; //jsonObject.getString("result");
+                        resultHelloWorld = strJson;
+//			JSONObject jsonObject = new JSONObject(strJson);
+//			resultHelloWorld = jsonObject.getString("result");
 		} catch (UnauthorizedException e) {
 			resultHelloWorld = "Operation needs authentication!";
 		}
@@ -225,7 +227,7 @@ public class SecurityAppMBean implements Serializable {
 	private String callWebservice(String urlWebservice) throws UnauthorizedException { 
 		return callWebservice(urlWebservice, "");
 	}
-	
+	// ele pede o tolken, o que os outros nao pediam
 	private String callWebservice(String urlWebservice, String accessToken) throws UnauthorizedException { 
 		String result = "";
 		HttpURLConnection connection = null;

@@ -25,7 +25,7 @@ public class SecurityAppMBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String CLIENT_ID = "88b383b409e74441b9d8f02b6afa0b2c";
+	private static final String CLIENT_ID = "2d10f3b7-f7a3-4e66-8005-c974994d2ecb";
 
 	private static final String URL_SERVICE_1 = "http://localhost:8080/Example-Application-Security-REST/securityapp/service1";
 	private static final String URL_SERVICE_2 = "http://localhost:8080/Example-Application-Security-REST/securityapp/service2";
@@ -46,8 +46,9 @@ public class SecurityAppMBean implements Serializable {
 		HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 		
 		OAuthClientRequest codeRequest = OAuthClientRequest
-				.authorizationLocation("http://192.168.99.100:8000/oauth2/authorize")
+				.authorizationLocation("http://10.7.52.86:3000/oauth2/authorize")
 				.setParameter("response_type", "code")
+                                .setParameter("state", "xyz")
 				.setClientId(CLIENT_ID)
 				.setRedirectURI("http://localhost:8080/Example-Application-Security-UI/auth")
 				.buildQueryMessage();
@@ -60,7 +61,7 @@ public class SecurityAppMBean implements Serializable {
 		HttpSession session = httpServletRequest.getSession();
 		String accessToken = (String) session.getAttribute("access_token");
 		
-		String strJson = callWebservice("http://192.168.99.100:8000/user?access_token=" + accessToken);
+		String strJson = callWebservice("http://10.7.52.86:3000/user?access_token=" + accessToken);
 		JSONObject jsonObject = new JSONObject(strJson);
 		resultUserInfo = jsonObject.toString();
 	}

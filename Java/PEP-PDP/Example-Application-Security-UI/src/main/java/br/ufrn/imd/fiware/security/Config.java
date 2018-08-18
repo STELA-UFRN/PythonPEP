@@ -4,8 +4,8 @@ import org.apache.commons.codec.binary.Base64;
 
 public class Config {
 
-	public static final String PROXY_ADDRESS = "192.168.99.100:80";
-	public static final String APPLICATION_ADDRESS = "127.0.0.1:5000";
+	public static final String PROXY_ADDRESS = "10.7.52.86:80";
+	public static final String APPLICATION_ADDRESS = "localhost:8080";
 	
 //	//Real APP
 //	public static final String IDM_ADDRESS = "http://10.7.31.29:8000";	
@@ -13,9 +13,9 @@ public class Config {
 //	public static final String CLIENT_SECRET = "934ab80355744d6a9973310239746e12";
 
 	//Docker APP
-	public static final String IDM_ADDRESS = "http://192.168.99.100:8000";
-	public static final String CLIENT_ID = "88b383b409e74441b9d8f02b6afa0b2c";
-	public static final String CLIENT_SECRET = "0200572e51744454acd35e71bd9473ac";
+	public static final String IDM_ADDRESS = "http://10.7.52.86:3000";
+	public static final String CLIENT_ID = "2d10f3b7-f7a3-4e66-8005-c974994d2ecb";
+	public static final String CLIENT_SECRET = "b3bfb5fb-fba6-4192-b9cd-16b1c187434a";
 	
 	public static final String BASE_64_ENCODED_STRING = new String(Base64.encodeBase64((CLIENT_ID + ":" + CLIENT_SECRET).getBytes()));
 	

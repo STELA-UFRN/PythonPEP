@@ -24,6 +24,7 @@
 		<servlet-name>Auth Servlet</servlet-name>
 		<url-pattern>/auth</url-pattern>
 	</servlet-mapping>
+        
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>/faces/*</url-pattern>

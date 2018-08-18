@@ -22,8 +22,8 @@ public class AuthServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String CLIENT_SECRET = "0200572e51744454acd35e71bd9473ac";
-	private static final String CLIENT_ID = "88b383b409e74441b9d8f02b6afa0b2c";
+	private static final String CLIENT_SECRET = "b3bfb5fb-fba6-4192-b9cd-16b1c187434a";
+	private static final String CLIENT_ID = "2d10f3b7-f7a3-4e66-8005-c974994d2ecb";
 	private static final String BASE_64_ENCODED_STRING = new String(Base64.encodeBase64((CLIENT_ID + ":" + CLIENT_SECRET).getBytes()));
 
 	@Override
@@ -34,7 +34,7 @@ public class AuthServlet extends HttpServlet {
 			String code = oar.getCode();
 
 			OAuthClientRequest tokenRequest = OAuthClientRequest
-					.tokenLocation("http://192.168.99.100:8000/oauth2/token")
+					.tokenLocation("http://10.7.52.86:3000/oauth2/token")
 					.setGrantType(GrantType.AUTHORIZATION_CODE).setCode(code)
 					.setRedirectURI("http://localhost:8080/Example-Application-Security-UI/auth")
 					.buildBodyMessage();
