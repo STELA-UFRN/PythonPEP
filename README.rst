@@ -4,17 +4,20 @@ Tutorial para Aplicações com Fiware
 Aplicações Web
 ^^^^^^^^^^^^^^
    
-- Aplicação 1
+Aplicação 1 - Nivel 0
+===========
 
-   A aplicação 1 suporta projetos que possuem a seguinte aplicação:
+Essa aplicação não utiliza os componentes GE FIWARE, portanto não possui segurança. 
 
-   .. image:: documentacao-vm/source/imagens/app1.png 
+	.. image:: documentacao-vm/source/imagens/app1.png 
 
-- Aplicação 2
 
-   A aplicação 2 suporta projetos que possuem a seguinte aplicação:
+Aplicação 2 - NIVEL 1: AUTENTICAÇÃO 
+===========
 
-   .. image:: documentacao-vm/source/imagens/app2.png 
+A aplicação 2 possui uma arquitetura onde é necessario que o usuário realize uma autenticação no keyrock para pode utilizar os serviços.
+
+.. image:: documentacao-vm/source/imagens/app2.png
 
 - Aplicação 3
 
