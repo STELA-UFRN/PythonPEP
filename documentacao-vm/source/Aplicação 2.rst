@@ -1,6 +1,6 @@
 Aplicação 2
 ===========
 
-A aplicação 2 suporta projetos que possuem a seguinte aplicação:
+A aplicação 2 possui uma arquitetura onde é necessario que o usuário realize uma autenticação no keyrock para pode utilizar os serviços.
 
 .. image:: imagens/app2.png 
