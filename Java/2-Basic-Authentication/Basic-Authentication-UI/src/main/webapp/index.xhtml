@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html">
+
+	<h:head>
+		<title>Basic-Authentication</title>
+	</h:head>
+	
+	<h:body>
+		<h2>Basic-Authentication</h2>
+                <p>User authentication using FIWARE IDM.</p>
+                <hr />
+		
+		<h3>Authentication Test</h3>
+		<h4>Authenticate User</h4>
+		<h:form>
+			<h:commandButton value="Authenticate" action="#{securityAppMBean.authenticateUser}"></h:commandButton>
+		</h:form>
+		
+		<h4>Request Logged User Info</h4>
+		<h:form>
+			<h:commandButton value="Request Info" action="#{securityAppMBean.requestUserInfo}"></h:commandButton>
+		</h:form>
+		<h:outputLabel value="#{securityAppMBean.resultUserInfo}"></h:outputLabel>
+		<hr />
+                
+		<h3>Hello Service</h3>
+		<h4>Hello World</h4>
+		<h:form>
+			<h:commandButton value="Hello World" action="#{securityAppMBean.helloWorld}"></h:commandButton>
+		</h:form>
+		<h:outputLabel value="#{securityAppMBean.resultHelloWorld}"></h:outputLabel>
+		
+		<h4>Greeting</h4>
+		<h:form>
+			<h:outputLabel value="Username: "></h:outputLabel>
+			<h:inputText value="#{securityAppMBean.username}"></h:inputText>
+			<h:commandButton value="Greet" action="#{securityAppMBean.greeting}"></h:commandButton>
+		</h:form>
+		<h:outputLabel value="#{securityAppMBean.resultGreeting}"></h:outputLabel>
+		<hr />
+                
+		<h3>Names Service</h3>
+		<h4>List Names</h4>
+		<h:form>
+			<h:commandButton value="List Names" action="#{securityAppMBean.listNames}"></h:commandButton>
+		</h:form>
+		<h:outputLabel value="#{securityAppMBean.resultListNames}"></h:outputLabel>
+		
+		<h4>Add Name</h4>
+		<h:form>
+			<h:outputLabel value="Name "></h:outputLabel>
+			<h:inputText value="#{securityAppMBean.name}"></h:inputText>
+			<h:commandButton value="Add" action="#{securityAppMBean.addName}"></h:commandButton>
+		</h:form>
+		<h:outputLabel value="#{securityAppMBean.resultAddName}"></h:outputLabel>
+	</h:body>
+</html>
