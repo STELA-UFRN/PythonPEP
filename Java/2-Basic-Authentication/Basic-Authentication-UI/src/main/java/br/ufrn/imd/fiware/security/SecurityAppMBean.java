@@ -6,6 +6,9 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -53,49 +56,123 @@ public class SecurityAppMBean implements Serializable {
 		
 		httpServletResponse.sendRedirect(codeRequest.getLocationUri());
 	}
+        
+        public String getAccessToken () {
+            HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            HttpSession session = httpServletRequest.getSession();
+            String accessToken = (String) session.getAttribute("access_token");
+            
+            if (accessToken == null) {
+                return "";
+            } else {
+                return accessToken;
+            }
+        }
+        
+        public boolean validateUser () {
+            try {
+                callWebservice(Config.IDM_ADDRESS + "/user?access_token=" + getAccessToken());
+                return true;
+            } catch (UnauthorizedException e) {
+                return false;
+            }
+        } 
 	
 	public void requestUserInfo() {
-		HttpServletRequest httpServletRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		HttpSession session = httpServletRequest.getSession();
-		String accessToken = (String) session.getAttribute("access_token");
 		
-		String strJson = callWebservice(Config.IDM_ADDRESS + "/user?access_token=" + accessToken);
-		JSONObject jsonObject = new JSONObject(strJson);
-		resultUserInfo = jsonObject.toString();
+		String accessToken = getAccessToken();
+                try {
+                    String strJson = callWebservice(Config.IDM_ADDRESS + "/user?access_token=" + accessToken);
+                    JSONObject jsonObject = new JSONObject(strJson);
+                    
+                    resultUserInfo = "Username: " + jsonObject.getString("username") + "\n";
+                    resultUserInfo += "Email: " + jsonObject.getString("email") + "\n";
+                    resultUserInfo += "Roles: ";
+                    
+                    JSONArray roles = jsonObject.getJSONArray("roles");
+                    Iterator<Object> it = roles.iterator();
+                    
+                    while (it.hasNext()) {
+                        JSONObject role = (JSONObject) it.next();
+                        resultUserInfo += role.getString("name");
+                        
+                        if (it.hasNext()) {
+                            resultUserInfo += ", ";
+                        }
+                    }
+                    
+                    resultUserInfo += "\n";
+                } catch (UnauthorizedException e) {
+                    resultUserInfo = "Operation needs authentication!";
+                }
 	}
 
-	public void helloWorld() {		
-		String strJson = callWebservice(URL_SERVICE_1);
-		JSONObject jsonObject = new JSONObject(strJson);
-		resultHelloWorld = jsonObject.getString("result");
+	public void helloWorld() {	
+            if (validateUser()) {
+                try {
+                    String strJson;
+                    strJson = callWebservice(URL_SERVICE_1);
+                    JSONObject jsonObject = new JSONObject(strJson);
+                    resultHelloWorld = jsonObject.getString("result");
+                } catch (UnauthorizedException ex) {
+                    Logger.getLogger(SecurityAppMBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                resultHelloWorld = "Operation needs authentication!";
+            }
+		
 	}
 
 	public void greeting() {
-		if (!username.equals("")) {
-			String strJson = callWebservice(URL_SERVICE_1 + "/" + username);
-			JSONObject jsonObject = new JSONObject(strJson);
-			resultGreeting = jsonObject.getString("result");
-			username = "";
+            if (validateUser()) {
+                if (!username.equals("")) {
+                    try {
+                        String strJson = callWebservice(URL_SERVICE_1 + "/" + username);
+                        JSONObject jsonObject = new JSONObject(strJson);
+                        resultGreeting = jsonObject.getString("result");
+                        username = "";
+                    } catch (UnauthorizedException ex) {
+                        Logger.getLogger(SecurityAppMBean.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 		} else {
 			resultGreeting = "Fill the username field first!";
 		}
+            } else {
+                resultGreeting = "Operation needs authentication!";
+            }
 	}
 
 	public void listNames() {
-		String strJson = callWebservice(URL_SERVICE_2);
-		JSONObject jsonObject = new JSONObject(strJson);
-		JSONArray jsonArrayNames = jsonObject.getJSONArray("names");
-		resultListNames = jsonArrayNames.toString();
+            if (validateUser()) {
+                try {
+                    String strJson = callWebservice(URL_SERVICE_2);
+                    JSONObject jsonObject = new JSONObject(strJson);
+                    JSONArray jsonArrayNames = jsonObject.getJSONArray("names");
+                    resultListNames = jsonArrayNames.toString();
+                } catch (UnauthorizedException ex) {
+                    Logger.getLogger(SecurityAppMBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                resultListNames = "Operation needs authentication!";
+            }
 	}
 
 	public void addName() {
-		if (!name.equals("")) {
-			callWebservice(URL_SERVICE_2 + "/" + name);
-			resultAddName = "Name added on list!";
-			name = "";
+            if (validateUser()) {
+                if (!name.equals("")) {
+                    try {
+                        callWebservice(URL_SERVICE_2 + "/" + name);
+                        resultAddName = "Name added on list!";
+                        name = "";
+                    } catch (UnauthorizedException ex) {
+                        Logger.getLogger(SecurityAppMBean.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 		} else {
 			resultAddName = "Fill the name field first!";
 		}
+            } else {
+                resultAddName = "Operation needs authentication!";
+            }
 	}
 
 	public String getUsername() {
@@ -177,21 +254,52 @@ public class SecurityAppMBean implements Serializable {
 		}
 		return sb.toString();
 	}
-
-	private String callWebservice(String urlWebservice) {
+        
+        private String callWebservice(String urlWebservice) throws UnauthorizedException {
 		HttpURLConnection connection = null;
-		try {
+		String result = "";
+                
+                try {
 			URL url = new URL(urlWebservice);
 			connection = (HttpURLConnection) url.openConnection();
-
+                        
 			InputStream inputStream = connection.getInputStream();
-			return getStringFromInputStream(inputStream);
+			result = getStringFromInputStream(inputStream);
+                        System.out.println(result);
 
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+                    e.printStackTrace();
+                    try {
+                        int responseCode = connection.getResponseCode ();
+          
+                        if (responseCode == 401) {
+                            throw new UnauthorizedException();
+                        }
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
 		} finally {
 			connection.disconnect();
 		}
+                
+                return result;
 	}
+        
+
+//	private String callWebservice(String urlWebservice) {
+//		HttpURLConnection connection = null;
+//		try {
+//			URL url = new URL(urlWebservice);
+//			connection = (HttpURLConnection) url.openConnection();
+//
+//			InputStream inputStream = connection.getInputStream();
+//			return getStringFromInputStream(inputStream);
+//
+//		} catch (IOException e) {
+//			throw new RuntimeException(e);
+//		} finally {
+//			connection.disconnect();
+//		}
+//	}
 
 }

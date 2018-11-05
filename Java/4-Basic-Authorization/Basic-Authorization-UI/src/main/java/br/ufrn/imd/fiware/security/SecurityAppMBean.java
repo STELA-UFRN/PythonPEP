@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -41,18 +43,27 @@ public class SecurityAppMBean implements Serializable {
 		this.name = "";
 	}
 	
-	public void authenticateUser() throws OAuthSystemException, IOException {
+//        throws OAuthSystemException, IOException
+	public void authenticateUser(){
+                System.out.println("ENTROU1");
 		HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-		
-		OAuthClientRequest codeRequest = OAuthClientRequest
-				.authorizationLocation(Config.IDM_ADDRESS + Config.ACCESS_AUTH_URL)
-				.setParameter("response_type", "code")
-                                .setParameter("state", "xyz")
-				.setClientId(Config.CLIENT_ID)
-				.setRedirectURI(Config.APPLICATION_ADDRESS + Config.APPLICATION_UI + Config.CALLBACK)
-				.buildQueryMessage();
-		
-		httpServletResponse.sendRedirect(codeRequest.getLocationUri());
+		System.out.println("ENTROU");
+		OAuthClientRequest codeRequest;
+            try {
+                codeRequest = OAuthClientRequest
+                        .authorizationLocation(Config.IDM_ADDRESS + Config.ACCESS_AUTH_URL)
+                        .setParameter("response_type", "code")
+                        .setParameter("state", "xyz")
+                        .setClientId(Config.CLIENT_ID)
+                        .setRedirectURI(Config.APPLICATION_ADDRESS + Config.APPLICATION_UI + Config.CALLBACK)
+                        .buildQueryMessage();
+                
+                 httpServletResponse.sendRedirect(codeRequest.getLocationUri());
+            } catch (OAuthSystemException ex) {
+                Logger.getLogger(SecurityAppMBean.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(SecurityAppMBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	}
 	
 	private String getAccessToken() {
